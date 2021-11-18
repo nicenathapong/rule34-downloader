@@ -1,11 +1,10 @@
 const { get } = require('axios')
 const { readFileSync , existsSync , mkdirSync , createWriteStream } = require('fs')
 const colors = require('colors')
-const cluster = require('cluster');
 
 readFileSync(__dirname + "/tags.txt", "utf-8").split("\r\n").forEach(async tags => {
     const pics_url = (await get("https://rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit=1000&tags=" + tags)).data.map(d => d.file_url)
-    if (!existsSync(__dirname + "\\" + tags)) mkdirSync("G:\\My Drive\\x\\" + tags)
+    if (!existsSync(__dirname + "\\" + tags)) mkdirSync(__dirname + "\\" + tags)
     pics_url.forEach(url => {
         if (!existsSync(__dirname + "\\" + tags + "\\" + pics_url.lastIndexOf(url) + "." + url.split(".")[url.split(".").length - 1])) getNsave(tags, pics_url, url)
     })
